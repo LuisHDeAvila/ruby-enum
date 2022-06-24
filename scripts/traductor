@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Author: eleAche
+# traductor de archivos por linea de comandos
+
+if [ $# -lt 0 ]
+then
+  read -p "ingresa el nombre de archivo: " INT_FILE
+else
+  INT_FILE=$1
+fi
+OUT_FILE=$INT_FILE_es.txt
+
+MAIN_FUNC()
+{
+TRANSLATER()
+{
+  exec 6<$INT_FILE
+  while read -u 6 line
+  do
+    echo $line | trans -b :es
+  done
+  exec 6<&-
+}
+exec 7>&1
+exec 1>$OUT_FILE
+TRANSLATER
+exec 1>&7
+exec 7>&-
+}
+
+MAIN_FUNC >& /dev/null
